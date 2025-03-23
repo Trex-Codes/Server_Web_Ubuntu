@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Dashboard</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div class="menu-bar">
+        <h1>Music Dashboard</h1>
+        <nav>
+            <ul>
+                <li id="home">Home</li>
+                <li id="library">Library</li>
+                <li id="playlists">Playlists</li>
+                <li id="settings">Settings</li>
+            </ul>
+        </nav>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <h2>Browse Music</h2>
+            <ul>
+                <li id="recommendations">Recommendations</li>
+                <li id="new-releases">New Releases</li>
+                <li id="top-charts">Top Charts</li>
+                <li id="radio">Radio</li>
+                <li id="feed">Feed</li>
+            </ul>
+            <button class="new-playlist">New Playlist</button>
+        </div>
+        <div class="main-content">
+            <header>
+                <h1>uWSGI + Nginx + Flask </h1>
+            </header>
+
+            <!-- Sección de música recomendada -->
+            <div id="recommendations-section" class="section">
+                <h2>Recommendations</h2>
+                <div class="music-section">
+                    <div class="music-card blue">
+                        <h3>Awake</h3>
+                        <p>Romano</p>
+                    </div>
+                    <div class="music-card purple">
+                        <h3>Best Day</h3>
+                        <p>Mac Alex</p>
+                    </div>
+                    <div class="music-card teal">
+                        <h3>Beautiful</h3>
+                    </div>
+                    <div class="music-card pink">
+                        <h3>Sunset</h3>
+                        <p>Artist 4</p>
+                    </div>
+                    <div class="music-card orange">
+                        <h3>Night Drive</h3>
+                        <p>Artist 5</p>
+                    </div>
+                    <div class="music-card light-pink">
+                        <h3>On My Way</h3>
+                        <p>Artist 6</p>
+                    </div>
+                    <div class="music-card dark-pink">
+                        <h3>Lost in Time</h3>
+                        <p>Artist 7</p>
+                    </div>
+                    <div class="music-card blue">
+                        <h3>Echoes</h3>
+                        <p>Artist 8</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de nuevas canciones -->
+            <div id="new-releases-section" class="section">
+                <h2>New Releases</h2>
+                <p>Check out the latest music releases.</p>
+                <div class="music-section">
+                    <div class="music-card orange">
+                        <h3>Release 1</h3>
+                        <p>Artist 1</p>
+                    </div>
+                    <div class="music-card pink">
+                        <h3>Release 2</h3>
+                        <p>Artist 2</p>
+                    </div>
+                    <div class="music-card dark-pink">
+                        <h3>Release 3</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de top charts -->
+            <div id="top-charts-section" class="section">
+                <h2>Top Charts</h2>
+                <p>Listen to the top hits right now.</p>
+                <div class="music-section">
+                    <div class="music-card light-pink">
+                        <h3>Top Hit 1</h3>
+                        <p>Artist 1</p>
+                    </div>
+                    <div class="music-card teal">
+                        <h3>Top Hit 2</h3>
+                        <p>Artist 2</p>
+                    </div>
+                    <div class="music-card purple">
+                        <h3>Top Hit 3</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección de radio -->
+            <div id="radio-section" class="section">
+                <h2>Radio</h2>
+                <p>Stream the best radio stations.</p>
+            </div>
+
+            <!-- Sección de feed -->
+            <div id="feed-section" class="section">
+                <h2>Feed</h2>
+                <p>Stay updated with your music feed.</p>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

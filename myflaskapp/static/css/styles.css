@@ -1,0 +1,114 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #0d0d2b;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+.menu-bar {
+    background: #11113f;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.menu-bar h1 {
+    margin: 0;
+    font-size: 24px;
+}
+.menu-bar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+.menu-bar nav ul li {
+    display: inline;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.menu-bar nav ul li:hover {
+    color: #ff004c;
+}
+.container {
+    display: flex;
+    flex: 1;
+}
+.sidebar {
+    width: 250px;
+    background: #11113f;
+    padding: 20px;
+    height: 100vh;
+}
+.sidebar h2, .sidebar ul, .sidebar button {
+    color: white;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar li {
+    padding: 10px 0;
+    cursor: pointer;
+}
+.new-playlist {
+    background: #ff004c;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.new-playlist:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 0, 76, 0.7);
+}
+.new-playlist:active {
+    transform: scale(0.95);
+}
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.section {
+    display: none; /* Inicialmente ocultar todas las secciones */
+    margin-top: 20px;
+}
+.section.active {
+    display: block; /* Mostrar solo la sección activa */
+}
+.music-section, .popular-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+.music-card {
+    background: #22224e;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-width: 220px;
+}
+.music-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+.blue { background: #1e3a8a; }
+.purple { background: #7c3aed; }
+.teal { background: #0d9488; }
+.pink { background: #db2777; }
+.orange { background: #ea580c; }
+.light-pink { background: #f472b6; }
+.dark-pink { background: #9d174d; }
