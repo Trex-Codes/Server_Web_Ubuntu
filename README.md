@@ -1,12 +1,12 @@
-# Ubuntu Server 🚀
+# Flask Web Server on Ubuntu Server 20.04 LTS 🚀
 
 The web server was set up using technologies like Nginx, Flask, and uWSGI. All of this process was completed on Ubuntu Server 20.04 LTS.
 
 ### Table of Contents
+* [Install 🔧](#install)
+* [Usage ✔️](#usage)
+* [Structure 🏗️](#structure)
 
-* [Install 🔧]((#install))
-* [Usage ✔️]((#usage))
-* [Structure 🏗️]((#structure))
 
 # Install 🔧
 
@@ -134,6 +134,9 @@ sudo systemctl enable myweb.service
 sudo systemctl start myweb.service
 ```
 
+![Services](https://github.com/Trex-Codes/Server_Web_Ubuntu/blob/master/source/services.PNG?raw=true)
+
+
 ### Configuring Nginx (Reverse Proxy)
 
 * create a new Nginx configuration file for your application
@@ -210,38 +213,43 @@ sudo systemctl restart nginx
 sudo systemctl restart miweb
 ```
 
+# Result
+![Website deployment on IP address](https://github.com/Trex-Codes/Server_Web_Ubuntu/blob/master/source/website.PNG?raw=true)
+
+
 
 # Structure 🏗️
 
 The project is organized as follows:
 
-📂 /home/trexcodes/miweb
-│── 📜 app.py              # Main Flask application code
-│── 📜 wsgi.py             # uWSGI entry point
-│── 📜 uwsgi.ini           # uWSGI configuration
-│── 📂 venv/               # Python virtual environment
-│   ├── 📂 bin/            # Executables of the virtual environment
-│   ├── 📂 lib/            # Python libraries
-│   ├── 📂 include/        # Header files
-│── 📂 templates/          # HTML files
-│   ├── 📜 index.html      # Main page
-│── 📂 static/             # Static files
-│   ├── 📂 css/            # CSS styles
-│   │   ├── 📜 style.css   # Styles file
-│   ├── 📂 js/             # JavaScript files
-│   │   ├── 📜 script.js   # Script file
-│   ├── 📂 img/            # Site images
-│   │   ├── 📜 logo.png    # Example image
-│── 📂 logs/               # Log folder (optional)
-│   ├── 📜 uwsgi.log       # uWSGI logs
-│   ├── 📜 nginx.log       # Nginx logs
-│
-📂 /etc/nginx/sites-available/
-│── 📜 miweb               # Nginx configuration for the site
-📂 /etc/nginx/sites-enabled/
-│── 📜 miweb               # Symbolic link to the Nginx configuration
-📂 /etc/systemd/system/
-│── 📜 miweb.service       # Systemd service for uWSGI
+📂 /home/trexcodes/miweb  
+│── 📜 app.py              # Main Flask application code  
+│── 📜 wsgi.py             # uWSGI entry point  
+│── 📜 uwsgi.ini           # uWSGI configuration  
+│── 📂 venv/               # Python virtual environment  
+│   ├── 📂 bin/            # Executables of the virtual environment  
+│   ├── 📂 lib/            # Python libraries  
+│   ├── 📂 include/        # Header files  
+│── 📂 templates/          # HTML files  
+│   ├── 📜 index.html      # Main page  
+│── 📂 static/             # Static files  
+│   ├── 📂 css/            # CSS styles  
+│   │   ├── 📜 style.css   # Styles file  
+│   ├── 📂 js/             # JavaScript files  
+│   │   ├── 📜 script.js   # Script file  
+│   ├── 📂 img/            # Site images  
+│   │   ├── 📜 logo.png    # Example image  
+│── 📂 logs/               # Log folder (optional)  
+│   ├── 📜 uwsgi.log       # uWSGI logs  
+│   ├── 📜 nginx.log       # Nginx logs  
+│  
+📂 /etc/nginx/sites-available/  
+│── 📜 miweb               # Nginx configuration for the site  
+📂 /etc/nginx/sites-enabled/  
+│── 📜 miweb               # Symbolic link to the Nginx configuration  
+📂 /etc/systemd/system/  
+│── 📜 miweb.service       # Systemd service for uWSGI  
+
 
 
 - **`app.py`**: Contains the main Flask application logic.
@@ -254,3 +262,7 @@ The project is organized as follows:
 - **`/etc/nginx/sites-available/`**: Contains Nginx configuration for the site.
 - **`/etc/nginx/sites-enabled/`**: Symbolic link for the Nginx configuration.
 - **`/etc/systemd/system/`**: Contains the systemd service configuration for uWSGI.
+
+![Structure General](https://github.com/Trex-Codes/Server_Web_Ubuntu/blob/master/source/picture1.PNG?raw=true)
+
+
