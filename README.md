@@ -233,35 +233,37 @@ sudo systemctl restart miweb
 
 The project is organized as follows:
 
-📂 /home/trexcodes/miweb  
-│── 📜 app.py              # Main Flask application code  
-│── 📜 wsgi.py             # uWSGI entry point  
-│── 📜 uwsgi.ini           # uWSGI configuration  
-│── 📂 venv/               # Python virtual environment  
-│   ├── 📂 bin/            # Executables of the virtual environment  
-│   ├── 📂 lib/            # Python libraries  
-│   ├── 📂 include/        # Header files  
-│── 📂 templates/          # HTML files  
-│   ├── 📜 index.html      # Main page  
-│── 📂 static/             # Static files  
-│   ├── 📂 css/            # CSS styles  
-│   │   ├── 📜 style.css   # Styles file  
-│   ├── 📂 js/             # JavaScript files  
-│   │   ├── 📜 script.js   # Script file  
-│   ├── 📂 img/            # Site images  
-│   │   ├── 📜 logo.png    # Example image  
-│── 📂 logs/               # Log folder (optional)  
-│   ├── 📜 uwsgi.log       # uWSGI logs  
-│   ├── 📜 nginx.log       # Nginx logs  
-│  
-📂 /etc/nginx/sites-available/  
-│── 📜 miweb               # Nginx configuration for the site  
-📂 /etc/nginx/sites-enabled/  
-│── 📜 miweb               # Symbolic link to the Nginx configuration  
-📂 /etc/systemd/system/  
-│── 📜 miweb.service       # Systemd service for uWSGI  
+```text
+📂 /var/www/myflaskapp
+├── 📜 app.py
+├── 📜 myflaskapp.sock
+├── 📂 static
+│   ├── 📂 css
+│   │   └── 📜 styles.css  # Styles file
+│   ├── 📂 img
+│   │   └── 📜 logo.png  # Example image
+│   └── 📂 js
+│       └── 📜 script.js  # Script file
+├── 📂 templates
+│   └── 📜 index.html
+├── 📜 uwsgi.ini
+├── 📂 venv
+│   ├── 📂 bin
+│   ├── 📂 include
+│   ├── 📂 lib
+│   ├── 📂 lib64 -> lib
+│   └── 📜 pyvenv.cfg
+└── 📜 wsgi.py
 
-
+📂 /etc/nginx
+├── 📂 sites-available
+│   └── 📜 miweb          # Nginx config for the site
+├── 📂 sites-enabled
+│   └── 📜 miweb          # Symbolic link to the config
+└── 📂 systemd
+    └── 📜 miweb.service  # Systemd service for uWSGI
+```
+ 
 
 - **`app.py`**: Contains the main Flask application logic.
 - **`wsgi.py`**: The entry point for uWSGI.
