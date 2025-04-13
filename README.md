@@ -276,6 +276,6 @@ The project is organized as follows:
 - **`/etc/nginx/sites-enabled/`**: Symbolic link for the Nginx configuration.
 - **`/etc/systemd/system/`**: Contains the systemd service configuration for uWSGI.
 
-![Structure General](https://github.com/Trex-Codes/Server_Web_Ubuntu/blob/master/source/picture1.PNG?raw=true)
+![Structure General](https://github.com/Trex-Codes/Server_Web_Ubuntu/blob/master/source/picture1.jpg?raw=true)
 
 
