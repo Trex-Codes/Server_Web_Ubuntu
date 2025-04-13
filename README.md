@@ -32,7 +32,7 @@ sudo apt install -y python3 python3-venv python3-pip
 * First, create a directory for your project and navigate into it:
 
 ```
-mkdir -p ~/miweb && cd ~/miweb
+mkdir -p /var/www/myflaskapp
 ```
 
 Then, create and activate a Python virtual environment:
@@ -53,7 +53,7 @@ pip install flask uwsgi
 * Create a new Python file for your Flask application app.py:
 
 ```
-nano ~/miweb/app.py
+nano /var/www/myflaskapp/app.py
 ```
 
 ```
@@ -66,7 +66,7 @@ def home():
     return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run()
 ```
 
 ### Creating the Templates Folder and HTML Files
@@ -74,23 +74,16 @@ if __name__ == "__main__":
 * First, create the necessary directories for your project:
 
 ```
-mkdir -p ~/myweb/templates
-mkdir -p ~/myweb/static/css
-mkdir -p ~/myweb/static/js
-mkdir -p ~/myweb/static/img
-```
-
-* Then, create the routes for `styles.css - script.js` file for your web:
-
-```
-nano ~/miweb/static/css/style.css
-nano ~/miweb/static/js/script.js
+sudo mkdir -p /var/www/myflaskapp/templates
+sudo mkdir -p /var/www/myflaskapp/static/css
+sudo mkdir -p /var/www/myflaskapp/static/js
+sudo mkdir -p /var/www/myflaskapp/static/img
 ```
 
 ### Creating the wsgi.py File
 
 ```
-nano /home/trexcodes/myweb/wsgi.py
+nano /var/www/myflaskapp/wsgi.py
 ```
 
 ```
@@ -107,23 +100,24 @@ The `wsgi.py` file is used by uWSGI to serve your Flask application in productio
 * First, create a new systemd service file for your application (myweb.service):
 
 ```
-sudo nano /etc/systemd/system/miweb.service
+sudo nano /etc/systemd/system/uwsgi.service
 ```
 
 ```
 [Unit]
-Description=uWSGI server for myweb
+Description=uWSGI service for myflaskapp
 After=network.target
 
 [Service]
 User=trexcodes
 Group=www-data
-WorkingDirectory=/home/trexcodes/myweb
-Environment="PATH=/home/trexcodes/myweb/venv/bin"
-ExecStart=/home/trexcodes/myweb/venv/bin/uwsgi --ini uwsgi.ini
+WorkingDirectory=/var/www/myflaskapp
+ExecStart=/var/www/myflaskapp/venv/bin/uwsgi --ini /var/www/myflaskapp/uwsgi.ini
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
+
 
 ```
 
@@ -142,18 +136,31 @@ sudo systemctl start myweb.service
 * create a new Nginx configuration file for your application
 
 ```
-sudo nano /etc/nginx/sites-available/miweb
+sudo nano /etc/nginx/sites-available/myflaskapp
 ```
 
 ```
 server {
     listen 80;
-    server_name 192.168.1.14;  # Change this to your server's IP address
+    listen [::]:80;
 
+    # Domain name for your application (replace with your actual domain)
+    server_name trexcodes.cloud;  # Replace with your actual domain
+
+    # Route to serve static files
+    location /static/ {
+        alias /var/www/myflaskapp/static/;  # Path to the static folder
+    }
+
+    # Route to serve the Flask application through uWSGI
     location / {
         include uwsgi_params;
-        uwsgi_pass unix:/home/trexcodes/myweb/myweb.sock;
+        uwsgi_pass unix:/var/www/myflaskapp/myflaskapp.sock;  # Path to the socket created by uWSGI
     }
+
+    # Error and access logs
+    error_log /var/log/nginx/myflaskapp_error.log;
+    access_log /var/log/nginx/myflaskapp_access.log;
 }
 
 ```
@@ -161,7 +168,7 @@ server {
 After creating the configuration file, create a symbolic link to enable it:
 
 ```
-sudo ln -s /etc/nginx/sites-available/myweb /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/myflaskapp /etc/nginx/sites-enabled/
 sudo nginx -t  # Verifies if there are errors in the configuration
 sudo systemctl restart nginx
 ```
@@ -173,18 +180,22 @@ This will set up Nginx as a reverse proxy to forward requests to the uWSGI serve
 * Then, add the following configuration to the `uwsgi.ini` file:
 
 ```
-nano /home/trexcodes/miweb/uwsgi.ini
+nano /var/www/myflaskapp/uwsgi.ini
 ```
 
 ```
 [uwsgi]
 module = wsgi:app
+
 master = true
 processes = 4
-socket = /home/trexcodes/myweb/myweb.sock
+
+socket = /var/www/myflaskapp/myflaskapp.sock
 chmod-socket = 660
 vacuum = true
+
 die-on-term = true
+virtualenv = /var/www/myflaskapp/venv
 ```
 
 ```
@@ -195,10 +206,10 @@ Once you've edited and saved the file, uWSGI will use this configuration when it
 
 # Usage  ✔️
 
-* Once the `miweb.service` file is configured, reload the systemd manager to recognize the new service:
-  * Start the `miweb` service
+* Once the `myflaskapp.service` file is configured, reload the systemd manager to recognize the new service:
+  * Start the `myflaskapp` service
   * Enable the service to start automatically on boot
-  * Check the status of the `miweb` service to ensure it's running correctly
+  * Check the status of the `myflaskapp` service to ensure it's running correctly
 
 ```
 sudo systemctl start miweb
