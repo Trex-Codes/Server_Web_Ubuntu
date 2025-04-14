@@ -273,6 +273,7 @@ The project is organized as follows:
 - **`/etc/nginx/sites-enabled/`**: Symbolic link for the Nginx configuration.
 - **`/etc/systemd/system/`**: Contains the systemd service configuration for uWSGI.
 
+<<<<<<< HEAD
 # Integration 🌐 Cloudflare
 
 We used **Cloudflare Named Tunnel 🔒** to securely expose our local web server (`http://localhost:80`) to the internet **without opening firewall ports** or directly exposing the server's public IP.
@@ -284,6 +285,9 @@ We used the **persistent tunnel** method (`cloudflared tunnel create`) and confi
 ## 1. Into the server Ubuntu
 
 * ### Download and install cloudflared
+=======
+![Structure General](https://github.com/Trex-Codes/Server_Web_Ubuntu/blob/master/source/picture1.jpg?raw=true)
+>>>>>>> ad3ed50704bea8ef689d5f18ca98b54059873a15
 
 
   ```
