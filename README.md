@@ -3,15 +3,15 @@
 The web server was set up using technologies like Nginx, Flask, and uWSGI. All of this process was completed on Ubuntu Server 20.04 LTS.
 
 ### Table of Contents
+
 * [Install 🔧](#install)
 * [Usage ✔️](#usage)
 * [Structure 🏗️](#structure)
-
+* [Integration Cloudflare](#integration-cloudflare) [🌐 ](#integration-cloudflare)
 
 # Install 🔧
 
 * Download the ISO for Ubuntu Server from the official website at [Ubuntu](https://ubuntu.com/download/server).
-
 * We used [VirtualBox](https://www.virtualbox.org/wiki/Downloads) to create the simulation, but you can download and install it as needed.
 * Once all the required programs are installed on your computer, proceed with the next step.
 * Configure the ISO and, in the final step, set your network interface to "Bridge adapter" to make the VM act like a PC on your LAN.
@@ -130,7 +130,6 @@ sudo systemctl start myweb.service
 
 ![Services](https://github.com/Trex-Codes/Server_Web_Ubuntu/blob/master/source/services.PNG?raw=true)
 
-
 ### Configuring Nginx (Reverse Proxy)
 
 * create a new Nginx configuration file for your application
@@ -224,10 +223,9 @@ sudo systemctl restart nginx
 sudo systemctl restart miweb
 ```
 
-# Result
+## Result
+
 ![Website deployment on IP address](https://github.com/Trex-Codes/Server_Web_Ubuntu/blob/master/source/website.PNG?raw=true)
-
-
 
 # Structure 🏗️
 
@@ -263,7 +261,6 @@ The project is organized as follows:
 └── 📂 systemd
     └── 📜 miweb.service  # Systemd service for uWSGI
 ```
- 
 
 - **`app.py`**: Contains the main Flask application logic.
 - **`wsgi.py`**: The entry point for uWSGI.
@@ -276,6 +273,94 @@ The project is organized as follows:
 - **`/etc/nginx/sites-enabled/`**: Symbolic link for the Nginx configuration.
 - **`/etc/systemd/system/`**: Contains the systemd service configuration for uWSGI.
 
-![Structure General](https://github.com/Trex-Codes/Server_Web_Ubuntu/blob/master/source/picture1.PNG?raw=true)
+# Integration 🌐 Cloudflare
+
+We used **Cloudflare Named Tunnel 🔒** to securely expose our local web server (`http://localhost:80`) to the internet **without opening firewall ports** or directly exposing the server's public IP.
+
+A custom domain (`trexcodes.cloud`) was registered via  **Hostinger** , which was later added to  **Cloudflare** . This allowed us to route external traffic to our internal application using a secure and reliable connection.
+
+We used the **persistent tunnel** method (`cloudflared tunnel create`) and configured it as a  **systemd service** , ensuring the tunnel runs continuously and starts automatically on server boot.
+
+## 1. Into the server Ubuntu
+
+* ### Download and install cloudflared
 
 
+  ```
+  wget -O cloudflared.deb https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+  sudo dpkg -i cloudflared.deb
+  ```
+* ### Authenticate cloudflared with your Cloudflare account
+
+  `cloudflared tunnel login`
+* ### Create the tunnel (give it a name, eg., "TunnelNetwork")
+
+
+  ```
+  cloudflared tunnel create TunnelNetwork
+  ```
+* ### Create the configuration file
+
+  This will generate a tunnel ID and credentials file inside ~/.cloudflared/
+
+
+  ```
+  sudo nano /etc/cloudflared/config.yml
+  ```
+
+  ```
+  tunnel: TunnelNetwork
+  credentials-file: /root/.cloudflared/<TUNNEL_ID>.json
+
+  ingress:
+    - hostname: trexcodes.cloud
+      service: http://localhost:80
+    - service: http_status:404
+
+
+  ```
+* ### Create systemd service to run the tunnel on boot
+
+
+  ```
+  sudo cloudflared service install
+  ```
+* ### Start and enable the tunnel service
+
+```
+sudo systemctl start cloudflared
+sudo systemctl enable cloudflared
+```
+
+## 2. Go to the website CloudFlared
+
+- ### Add your domain to Cloudflare:
+
+  - Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) and click **“Add a Site”**.
+  - Enter your domain (e.g. `trexcodes.cloud`).
+  - Select the **Free plan** or another plan that fits your needs.
+- ### Update your domain’s nameservers:
+
+  - Cloudflare will provide two nameservers (e.g., `mark.ns.cloudflare.com`, `june.ns.cloudflare.com`).
+  - Log in to your domain registrar and replace the current nameservers with the ones provided by Cloudflare.
+
+* ### Configure DNS records:
+
+  * In the **DNS** tab of your Cloudflare dashboard:
+    * Make sure you have an **A record** like this:
+
+      ```
+      Type: A
+      Name: @
+      Value: <YOUR_SERVER_PUBLIC_IP>
+      Proxy status: Proxied (orange cloud)
+      ```
+    * Optionally, add a `www` CNAME pointing to `@` if you want to support `www.trexcodes.cloud`.
+* ### Verify setup
+
+  - Once DNS has propagated (can take a few minutes to a few hours), access your site via:
+
+    ```
+    https://trexcodes.cloud
+    ```
+  - Your traffic is now routed securely through Clouflare.

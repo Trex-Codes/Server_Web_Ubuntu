@@ -1,0 +1,22 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    # Domain name for your application (replace with your actual domain)
+    server_name trexcodes.cloud;  # Replace with your actual domain
+
+    # Route to serve static files
+    location /static/ {
+        alias /var/www/myflaskapp/static/;  # Path to the static folder
+    }
+
+    # Route to serve the Flask application through uWSGI
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/var/www/myflaskapp/myflaskapp.sock;  # Path to the socket created by uWSGI
+    }
+
+    # Error and access logs
+    error_log /var/log/nginx/myflaskapp_error.log;
+    access_log /var/log/nginx/myflaskapp_access.log;
+}

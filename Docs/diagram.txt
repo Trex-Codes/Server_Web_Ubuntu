@@ -1,0 +1,33 @@
+┌────────────────────┐
+│    Web Browser     │   ← User enters https://trexcodes.cloud
+└────────┬───────────┘
+         │
+         ▼
+┌────────────────────┐
+│     Cloudflare     │   ← Domain is registered and proxied here
+└────────┬───────────┘
+         │
+         ▼
+┌─────────────────────────────┐
+│  Cloudflare Tunnel (Argo)   │   ← Secure tunnel from Cloudflare to server
+│     (cloudflared daemon)    │
+└────────┬─────────────┬──────┘
+         │             │
+         ▼             ▼
+ ┌──────────────────────────────┐
+ │        Nginx (Port 80)       │   ← Acts as reverse proxy on the local server
+ └────────┬─────────────────────┘
+          │
+          ▼
+ ┌──────────────────────────────┐
+ │     uWSGI (Unix Socket)      │   ← Middleware that runs the Flask app
+ └────────┬─────────────────────┘
+          │
+          ▼
+ ┌──────────────────────────────┐
+ │      Flask Application       │   ← Handles logic and returns responses
+ └──────────────────────────────┘
+
+         ▲
+         │
+         └──────────── Response travels back the same way ────────────┘

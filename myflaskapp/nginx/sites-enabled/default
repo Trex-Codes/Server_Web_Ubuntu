@@ -1,0 +1,16 @@
+server {
+    listen 80;
+    server_name 100.109.112.19;  # O tu dominio
+
+    location / {
+        include uwsgi_params;
+        uwsgi_pass unix:/var/www/myflaskapp/myflaskapp.sock;  # Archivo socket de uWSGI
+    }
+
+    location /static/ {
+        alias /var/www/myflaskapp/static/;  # Ajusta según tu carpeta de estáticos
+    }
+
+    error_log /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+}
