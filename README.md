@@ -367,4 +367,5 @@ sudo systemctl enable cloudflared
     ```
     https://trexcodes.cloud
     ```
+    ![Status Tunnel CloudFlared](https://github.com/Trex-Codes/Server_Web_Ubuntu/blob/master/source/tunnel.jpg?raw=true)
   - Your traffic is now routed securely through Clouflare.
